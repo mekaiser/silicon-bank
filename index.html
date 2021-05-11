@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!--  Login Area  -->
+
     <div id="login-area">
       <h1 class="bank-title text-center">Welcome to Silicon Bank</h1>
       <div class="submit-area">
@@ -30,6 +32,11 @@
         <button id="login" class="btn btn-success">Enter</button>
       </div>
     </div>
+
+    <!--  Transaction Area - TA  -->
+
+    <!-- TA - Deposit, withdraw and balance view box -->
+
     <div id="transaction-area">
       <div class="row">
         <div class="col-md-4">
@@ -41,7 +48,7 @@
         <div class="col-md-4">
           <div class="withdraw status">
             <h5>Withdraw</h5>
-            <h2>$ 00</h2>
+            <h2>$ <span id="currentWithdraw">00</span></h2>
           </div>
         </div>
         <div class="col-md-4">
@@ -52,9 +59,10 @@
         </div>
       </div>
 
-      <!-- Deposit and withdraw box -->
+      <!-- TA - Deposit and withdraw input box -->
 
       <div class="row">
+        <!-- TA - Withdraw input box-->
         <div class="col-md 6">
           <div class="submit-area">
             <h4>Deposit</h4>
@@ -69,8 +77,7 @@
           </div>
         </div>
 
-        <!-- //---------------------------------------- -->
-
+        <!-- TA - Deposit input box-->
         <div class="col-md 6">
           <div class="submit-area">
             <h4>Withdraw</h4>
@@ -100,19 +107,22 @@
       const depositBtn = document.getElementById("addDeposit");
       depositBtn.addEventListener("click", function () {
         const depositNumber = getInputNumber("depositAmount");
-        console.log(depositNumber);
 
         updateSpanText("currentDeposit", depositNumber);
         updateSpanText("currentBalance", depositNumber);
 
         document.getElementById("depositAmount").value = "";
-      }); // clear the deposit input field
+      });
 
       // withdraw button event handler
       const withdrawBtn = document.getElementById("addWithdraw");
       withdrawBtn.addEventListener("click", function () {
-        const withdrawNumber = getInputNumber("withdrawNumber");
-        console.log(withdrawNumber);
+        const withdrawNumber = getInputNumber("withdrawAmount");
+
+        updateSpanText("currentWithdraw", withdrawNumber);
+        updateSpanText("currentBalance", -1 * withdrawNumber);
+
+        document.getElementById("withdrawAmount").value = " ";
       });
 
       function getInputNumber(id) {
@@ -121,12 +131,12 @@
         return amountNumber;
       }
 
-      function updateSpanText(id, depositNumber) {
+      function updateSpanText(id, addedNumber) {
         const current = document.getElementById(id).innerText;
         const currentNumber = parseFloat(current);
-        const totalAmount = depositNumber + currentNumber;
-        // total value
-        document.getElementById(id).innerText = totalAmount; // update value $ on deposit or balance box
+        const totalAmount = addedNumber + currentNumber;
+        // total amount
+        document.getElementById(id).innerText = totalAmount; // update total amount on deposit/ withdraw/ balance
       }
     </script>
   </body>
